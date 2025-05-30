@@ -1,41 +1,56 @@
-import {CircleType, Circle, Rectangle, RectangleType} from './types/CanvasTypes.ts';
+import {
+  CircleType,
+  type Circle,
+  type Rectangle,
+  RectangleType,
+} from "../types/CanvasTypes.ts";
 
 export function drawCircle(
   context: CanvasRenderingContext2D,
-  circleX: number,
-  circleY: number,
-  circleRadius: number,
   circleType: CircleType,
-  circleColor: string,
+  circle: Circle,
 ): void {
   context.beginPath();
-  context.arc(circleX, circleY, circleRadius, 0, 2 * Math.PI);
+  context.arc(circle.x, circle.y, circle.r, 0, 2 * Math.PI);
   switch (circleType) {
     case CircleType.FILL:
-      context.fillStyle = circleColor;
+      context.fillStyle = circle.color;
       context.fill();
       break;
     case CircleType.STROKE:
-      context.strokeStyle = circleColor;
+      context.strokeStyle = circle.color;
       context.stroke();
       break;
   }
-};
-
-export function drawRectangle(rectangle: Rectangle, rectangleType: RectangleType) {
-  context.beginPath();
+  context.closePath();
 }
 
-export function detectCircleCollisionOfTwoCircles(circle1: Circle, circle2: Circle): boolean {
-  const {x1, y1, r1} = circle1;
-  const {x2, y2, r2} = circle2;
+export function drawRectangle(
+  context: CanvasRenderingContext2D,
+  rectangle: Rectangle,
+  rectangleType: RectangleType,
+): void {
+  switch (rectangleType) {
+    case RectangleType.FILL:
+      context.fillStyle = rectangle.color;
+      context.fillRect(rectangle.x, rectangle.y, rectangle.a, rectangle.b);
+      break;
+    case RectangleType.STROKE:
+      context.strokeStyle = rectangle.color;
+      context.strokeRect(rectangle.x, rectangle.y, rectangle.a, rectangle.b);
+      break;
+  }
+}
 
-  const distanceX = x1 - x2;
-  const distanceY = y1 - y2;
+export function detectCircleCollisionOfTwoCircles(
+  circle1: Circle,
+  circle2: Circle,
+): boolean {
+  const distanceX = circle1.x - circle2.x;
+  const distanceY = circle1.y - circle2.y;
   const distanceSquaredSum = distanceX * distanceX + distanceY * distanceY;
-  const radiiSum = r1 + r2;
+  const radiiSum = circle1.r + circle2.r;
   const radiiSumSquared = radiiSum * radiiSum;
 
   return distanceSquaredSum <= radiiSumSquared;
-};
-
+}
