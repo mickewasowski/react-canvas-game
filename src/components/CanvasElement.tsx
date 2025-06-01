@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import {
   detectCircleCollisionOfTwoCircles,
   drawCircle,
@@ -30,7 +30,7 @@ const CanvasElement = ({ player, items }: IProps) => {
   let playerY = 500;
   let playerRadius = player.initialRadius;
   let playerSpeed = 1;
-  let readyItems = items.map((x) => {
+  const readyItems = items.map((x) => {
     return {
       r: x.radius,
       color: x.color,
@@ -64,6 +64,7 @@ const CanvasElement = ({ player, items }: IProps) => {
         playerRadius += item.radiusIncrement;
         playerSpeed += item.speedIncremet;
         item.isCollected = true;
+        renderGame();
       }
     });
   };
@@ -91,6 +92,14 @@ const CanvasElement = ({ player, items }: IProps) => {
           color: x.color,
         });
       });
+
+    // draw the player in the bottom right corner
+    drawCircle(context!, CircleType.FILL, {
+      x: playerX,
+      y: playerY,
+      r: playerRadius,
+      color: player.color,
+    });
 
     const loop = () => {
       // draw the game board
