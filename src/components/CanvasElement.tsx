@@ -129,23 +129,35 @@ const CanvasElement = ({ player, items }: IProps) => {
 		switch (e.key) {
 			case "w":
 				//up
-				if (playerY - playerRadius - 5 - playerSpeed < 0) return;
-				playerY -= 5 + playerSpeed;
+				if (playerY - playerRadius - 5 - playerSpeed < 0) {
+					playerY = 600 - playerRadius;
+				} else {
+					playerY -= 5 + playerSpeed;
+				}
 				break;
 			case "a":
 				//left
-				if (playerX - playerRadius - 5 - playerSpeed < 0) return;
-				playerX -= 5 + playerSpeed;
+				if (playerX - playerRadius - 5 - playerSpeed < 0) {
+					playerX = 600 - playerRadius;
+				} else {
+					playerX -= 5 + playerSpeed;
+				}
 				break;
 			case "s":
 				//down
-				if (playerY + playerRadius + 5 + playerSpeed > 600) return;
-				playerY += 5 + playerSpeed;
+				if (playerY + playerRadius + 5 + playerSpeed > 600) {
+					playerY = 0 + playerRadius;
+				} else {
+					playerY += 5 + playerSpeed;
+				}
 				break;
 			case "d":
 				//right
-				if (playerX + playerRadius + 5 + playerSpeed > 600) return;
-				playerX += 5 + playerSpeed;
+				if (playerX + playerRadius + 5 + playerSpeed > 600) {
+					playerX = 0 + playerRadius;
+				} else {
+					playerX += 5 + playerSpeed;
+				}
 				break;
 			default:
 				return;
